@@ -43,7 +43,13 @@ def tally_votes(list_of_votes: list):
     """
     This function takes a list as an argument, and prints the item that appear the most times in that list
     """
-    list_of_votes 
+    vote_with_count_dict = {}
+    list_of_vote_options = set(list_of_votes)
+    for vote_option in list_of_vote_options:
+        vote_with_count_dict[vote_option] = list_of_votes.count(vote_option)
+    
+    highest_voted = max(vote_with_count_dict.values())
+
 
 
 @dag(
