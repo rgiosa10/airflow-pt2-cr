@@ -107,22 +107,33 @@ Below is the log of the `tally_votes_task` showing the expected output:
     docker-compose up airflow-init
 ```
 
-* You will need to create a file connection for the `data/` folder. To do so go to the airflow GUI and click Admin -> Connections and then create a new connection with the below config:
-
-    <img src="imgs/conn_setup.png" alt="connection setup" width="640"/>
-
-click save
-
-* Once setups have been completed, you will want to be using the below commands to manage airflow and docker:
-    1. Once airflow has been initialized, use the below command line tool that allows you to initialize the rest of the Docker containers:
+* Once airflow has been initialized, use the below command line tool that allows you to initialize the rest of the Docker containers:
         ```bash
         docker-compose up
         ```
-    2. In order to shut down hit `^Ctrl C` to stop Airflow on the local host and then run the below to stop the containers and remove old volumes:
+
+* You will need to create a file connection for the `data/` folder. To do so go to the airflow GUI and click Admin -> Connections and then create a new connection with the below config and click save:
+
+    <img src="imgs/conn_setup.png" alt="connection setup" width="640"/>
+
+
+* Once this is all setup, in the Airflow GUI 1) enable your DAG and 2) trigger it to run. From there go to your VS Code and run the below command from inside the data directory:
+
+    ```bash
+    ./get_data.sh
+    ```
+This will download the CSV file to your local filesystem in the data folder, which will trigger the file sensor and start the DAG.
+
+* Once setups have been completed, you will want to be using the below commands to manage airflow and docker:
+    
+    1. In order to shut down hit `^Ctrl C` to stop Airflow on the local host and then run the below to stop the containers and remove old volumes:
         ```bash
         docker-compose down --volumes --remove-orphans 
         ```
-
+    2. Use the below command line tool if you want to re-initialize the rest of the Docker containers:
+        ```bash
+        docker-compose up
+        ```
 </br>
 
 ## Known Bugs
