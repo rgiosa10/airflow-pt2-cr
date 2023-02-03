@@ -1,0 +1,6 @@
+logs/
+plugins/
+.env
+dsa-airflow/data/
+data/
+venv/

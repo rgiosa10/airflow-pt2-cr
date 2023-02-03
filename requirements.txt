@@ -1,0 +1,8 @@
+pandas
+jupyterlab
+pyyaml
+google-cloud-storage
+google-cloud-bigquery
+pyarrow
+fsspec
+gcsfs
