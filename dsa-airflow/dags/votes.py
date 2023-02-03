@@ -8,8 +8,6 @@ from airflow.hooks.filesystem import FSHook
 
 VOTES_FILE_NAME = 'votes.csv'
 
-flavors_choices = ["lemon", "vanilla", "chocolate", "pistachio", "strawberry", "confetti", "caramel", "pumpkin", "rose"]
-
 @task
 def read_and_convert_list_with_return_value():
     """
@@ -18,6 +16,8 @@ def read_and_convert_list_with_return_value():
     This function uses an Airflow FileSystem Connection called "data_fs" as the root folder
     to look for the airports file. Make sure this FileSystem connection exists
     """
+    flavors_choices = ["lemon", "vanilla", "chocolate", "pistachio", "strawberry", "confetti", "caramel", "pumpkin", "rose"]
+    
     # get the data_fs filesystem root path
     data_fs = FSHook(conn_id='data_fs')     # get airflow connection for data_fs
     data_dir = data_fs.get_path()           # get its root path
@@ -43,7 +43,7 @@ def read_and_convert_list_with_return_value():
 @task
 def tally_votes(list_of_votes: list):
     """
-    This function takes a list as an argument, and prints the item that appear the most times in that list
+    This function takes a list as an argument, creates a dictionary with flavors voted (keys) and the number of votes of that flavor (values), and prints the item that appear the most times from that list
     """
     # create dict that will have flavor choices voted as key and count of votes for that flavor as value
     vote_with_count_dict = {}
@@ -85,7 +85,7 @@ def cake_flavor_vote():
 
     # read the file
     read_file_task = read_and_convert_list_with_return_value()
-
+    #
     tally_votes_task = tally_votes(read_file_task)
     
     # orchestrate tasks
