@@ -58,8 +58,7 @@ def tally_votes(list_of_votes: list):
     # get flavor that was voted the most times
     highest_voted = max(vote_with_count_dict, key=vote_with_count_dict.get)
 
-    return highest_voted
-
+    print(f'The flavor voted the most times was {highest_voted}')
 
 
 @dag(
@@ -68,7 +67,7 @@ def tally_votes(list_of_votes: list):
     catchup=False,
     default_view='graph',
     is_paused_upon_creation=True,
-    tags=['dsa', 'dsa-example'],
+    tags=['dsa', 'cr'],
 )
 def cake_flavor_vote():
     """Get flavor votes and find flavor with most votes"""
