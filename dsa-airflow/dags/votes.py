@@ -11,7 +11,7 @@ VOTES_FILE_NAME = 'votes.csv'
 flavors_choices = ["lemon", "vanilla", "chocolate", "pistachio", "strawberry", "confetti", "caramel", "pumpkin", "rose"]
 
 @task
-def read_file_and_convert_list():
+def read_and_convert_list_with_return_value():
     """
     read votes file from a CSV
 
@@ -84,7 +84,7 @@ def cake_flavor_vote():
     )
 
     # read the file
-    read_file_task = read_file_and_convert_list()
+    read_file_task = read_and_convert_list_with_return_value()
 
     tally_votes_task = tally_votes(read_file_task)
     
