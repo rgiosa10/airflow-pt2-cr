@@ -13,7 +13,7 @@ flavors_choices = ["lemon", "vanilla", "chocolate", "pistachio", "strawberry", "
 @task
 def read_file():
     """
-    read airports file from a CSV
+    read votes file from a CSV
 
     This function uses an Airflow FileSystem Connection called "data_fs" as the root folder
     to look for the airports file. Make sure this FileSystem connection exists
@@ -29,6 +29,21 @@ def read_file():
 
     # read csv
     df = pd.read_csv(file_path, header=1)
+    votes = list(df['votes'])
+
+    valid_votes = []
+    for vote in votes:
+        if vote in flavors_choices:
+            valid_votes.append(vote)
+    
+    return valid_votes
+
+@task
+def tally_votes(list_of_votes: list):
+    """
+    This function takes a list as an argument, and prints the item that appear the most times in that list
+    """
+    list_of_votes 
 
 
 @dag(
