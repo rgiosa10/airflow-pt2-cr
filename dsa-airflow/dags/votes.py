@@ -28,8 +28,8 @@ def read_file():
     print(f"reading file: {file_path}")
 
     # read csv
-    df = pd.read_csv(file_path, header=1)
-    votes = list(df['votes'])
+    df = pd.read_csv(file_path, header=0)
+    votes = df.votes.values.tolist()
 
     valid_votes = []
     for vote in votes:
@@ -48,7 +48,9 @@ def tally_votes(list_of_votes: list):
     for vote_option in list_of_vote_options:
         vote_with_count_dict[vote_option] = list_of_votes.count(vote_option)
     
-    highest_voted = max(vote_with_count_dict.values())
+    highest_voted = max(vote_with_count_dict, key=vote_with_count_dict.get)
+
+    return highest_voted
 
 
 
