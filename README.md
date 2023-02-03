@@ -22,7 +22,7 @@
 
 For this project, I made a very simple DAG (`votes.py`) that a user can run on the Airflow graphical interface. It uses a file sensor to check whether the `votes.csv` file has been uploaded to the `data/` folder of this repository. 
 
-Then it uses a `@task` that reads each row in `votes.csv`, and checks whether that value is in the `flavors_choices` list. If it is, it appends it to a new list called `valid_votes`. This task then returns the `valid_votes` list.
+It then leverages a `@task` that reads each row in `votes.csv`, and checks whether that value is in the `flavors_choices` list. If it is, it appends it to a new list called `valid_votes`. This task then returns the `valid_votes` list.
 
 In another `@task`, it uses a Python function that takes a list as an argument (passes the `return_value` XCom from first task as argument), and prints the item that appear the most times in that list. Below is the XCom `return_value` from the Airflow GUI:
 
@@ -107,9 +107,9 @@ Below is the log of the `tally_votes_task` showing the expected output:
     docker-compose up airflow-init
 ```
 
-* Then go to the airflow GUI. Once there click Admin -> Connections and then create a new connection with the below config:
+* You will need to create a file connection for the `data/` folder. To do so go to the airflow GUI and click Admin -> Connections and then create a new connection with the below config:
 
-<img src="imgs/conn_setup.png" alt="connection setup" width="640"/>
+    <img src="imgs/conn_setup.png" alt="connection setup" width="640"/>
 
 click save
 
