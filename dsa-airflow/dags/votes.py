@@ -45,15 +45,11 @@ def tally_votes(list_of_votes: list):
     """
     This function takes a list as an argument, creates a dictionary with flavors voted (keys) and the number of votes of that flavor (values), and prints the item that appear the most times from that list
     """
-    # create dict that will have flavor choices voted as key and count of votes for that flavor as value
-    vote_with_count_dict = {}
-
     # remove duplicates by converting to set to gets flavors to used as key for dictionary
     list_of_vote_options = set(list_of_votes)
 
-    # create vote_with_count_dict
-    for vote_option in list_of_vote_options:
-        vote_with_count_dict[vote_option] = list_of_votes.count(vote_option)
+    # create dict that will have flavor choices voted as key and count of votes for that flavor as value
+    vote_with_count_dict = {vote_option: list_of_votes.count(vote_option) for vote_option in list_of_vote_options}
     
     # get flavor that was voted the most times
     highest_voted = max(vote_with_count_dict, key=vote_with_count_dict.get)
