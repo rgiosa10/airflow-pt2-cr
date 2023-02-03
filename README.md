@@ -24,10 +24,16 @@ For this project, I made a very simple DAG (`votes.py`) that a user can run on t
 
 Then it uses a `@task` that reads each row in `votes.csv`, and checks whether that value is in the `flavors_choices` list. If it is, it appends it to a new list called `valid_votes`. This task then returns the `valid_votes` list.
 
-In another `@task`, it uses a Python function that takes a list as an argument (passes the `return_value` XCom from first task as argument), and prints the item that appear the most times in that list.
+In another `@task`, it uses a Python function that takes a list as an argument (passes the `return_value` XCom from first task as argument), and prints the item that appear the most times in that list. Below is the XCom `return_value` from the Airflow GUI:
+
+<img src="imgs/return_value.png" alt="return_value" width="640"/>
+
+Below is the log of the `tally_votes_task` showing the expected output:
+<img src="imgs/print_high_vote.png" alt="final output" width="640"/>
+
 
 #### DAG Structure:
-<img src="imgs/conn_setup.png" alt="DAG diagram" width="640"/>
+<img src="imgs/votes_dag.png" alt="DAG diagram" width="640"/>
 
 <br>
 
@@ -104,6 +110,8 @@ In another `@task`, it uses a Python function that takes a list as an argument (
 * Then go to the airflow GUI. Once there click Admin -> Connections and then create a new connection with the below config:
 
 <img src="imgs/conn_setup.png" alt="connection setup" width="640"/>
+
+click save
 
 * Once setups have been completed, you will want to be using the below commands to manage airflow and docker:
     1. Once airflow has been initialized, use the below command line tool that allows you to initialize the rest of the Docker containers:
