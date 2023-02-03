@@ -11,7 +11,7 @@ VOTES_FILE_NAME = 'votes.csv'
 flavors_choices = ["lemon", "vanilla", "chocolate", "pistachio", "strawberry", "confetti", "caramel", "pumpkin", "rose"]
 
 @task
-def read_file():
+def read_file_and_convert_list():
     """
     read votes file from a CSV
 
@@ -29,8 +29,10 @@ def read_file():
 
     # read csv
     df = pd.read_csv(file_path, header=0)
+    # convert votes column to list
     votes = df.votes.values.tolist()
 
+    # compare votes to the flavor choices to get valid votes
     valid_votes = []
     for vote in votes:
         if vote in flavors_choices:
@@ -43,11 +45,17 @@ def tally_votes(list_of_votes: list):
     """
     This function takes a list as an argument, and prints the item that appear the most times in that list
     """
+    # create dict that will have flavor choices voted as key and count of votes for that flavor as value
     vote_with_count_dict = {}
+
+    # remove duplicates by converting to set to gets flavors to used as key for dictionary
     list_of_vote_options = set(list_of_votes)
+
+    # create vote_with_count_dict
     for vote_option in list_of_vote_options:
         vote_with_count_dict[vote_option] = list_of_votes.count(vote_option)
     
+    # get flavor that was voted the most times
     highest_voted = max(vote_with_count_dict, key=vote_with_count_dict.get)
 
     return highest_voted
@@ -77,10 +85,12 @@ def cake_flavor_vote():
     )
 
     # read the file
-    read_file_task = read_file()
+    read_file_task = read_file_and_convert_list()
+
+    tally_votes_task = tally_votes(read_file_task)
     
     # orchestrate tasks
-    wait_for_file >> read_file_task
+    wait_for_file >> read_file_task >> tally_votes_task
 
 
 # create the dag
